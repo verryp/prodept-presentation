@@ -1,119 +1,200 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Project On Department</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+	<title>Project On Department</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<!-- ! Kata Pengantar -->
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/sky.css" id="theme">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	  <link rel="shortcut icon" href="/assets/favicon.png" />
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- ! Kata Pengantar -->
+			<section>
+				<a href="https://career.indomaretgroup.com">
+					<img src="/assets/idm-logo.png" alt="idm-logo"
+						style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+				</a>
+				<h3>Project On Department</h3>
+				<h4>DISC Test</h4>
+				<p>
+					<small>Created by <a href="https://verryp.xyz" target="_blank">Verryanto Paulus</a>, SD II
+						Indomaret Group</small>
+				</p>
+			</section>
+
+
+			<!-- ! Latar Belakang -->
+			<section>
+				<h2>Latar Belakang</h2>
+				<ol>
+					<li>Proses input hasil tes DISC masih menggunakan kertas (form fisik)</li>
+					<li>Tidak adanya integrasi dengan sistem HRIS</li>
+					<li>Pelamar yang sudah melakukan tes DISC tidak terdokumentasi</li>
+					<li>Cost yang diperlukan untuk biaya operasional(biaya kertas)</li>
+				</ol>
+			</section>
+
+			<section>
+				<h2>Tujuan</h2>
+				<ol>
+					<li>Kemudahan dalam mengakses data pelamar yang sudah melakukan tes secara online</li>
+					<li>Menurunkan cost biaya operasional untuk mencetak kertas</li>
+					<li>Digitalisasi Tes DISC</li>
+				</ol>
+			</section>
+
+			<section>
+				<h2>Perbandingan Alur</h2>
 				<section>
-					<a href="https://career.indomaretgroup.com">
-						<img src="/assets/idm-logo.png" alt="idm-logo"
-							style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
-					</a>
-					<h3>Project On Department</h3>
-					<h4>DISC Test</h4>
-					<p>
-						<small>Created by <a href="https://verryp.xyz" target="_blank">Verryanto Paulus</a>, SD II
-							Indomaret Group</small>
-					</p>
-				</section>
+					<h5>Before</h5>
 					
-				
-				<!-- ! Latar Belakang -->
-				<section>
-						<h2>Latar Belakang</h2>
-						<ol>
-							<li>Proses input hasil tes DISC masih menggunakan kertas (form fisik)</li>
-							<li>Tidak adanya integrasi dengan sistem HRIS</li>
-							<li>Pelamar yang sudah melakukan tes DISC tidak terdokumentasi</li>
-							<li>Cost yang diperlukan untuk biaya operasional(biaya kertas)</li>
-						</ol>
+					<pre>
+						<code class="language-plantuml">
+							@startuml
+							start
+							:Career apply;
+							:Screening HRIS;
+							:Psikotes + Skill Test + LGD + DHR;
+							:Interview + DISC;
+							:PKWT;
+							:Input ke HRMS;
+							stop
+							@enduml
+						</code>
+					</pre>
 				</section>
 
 				<section>
-					<h2>Tujuan</h2>
-					<ol>
-						<li>Kemudahan dalam mengakses data pelamar yang sudah melakukan tes secara online</li>
-						<li>Menurunkan cost biaya operasional untuk mencetak kertas</li>
-						<li>Digitalisasi Tes DISC</li>
-					</ol>
+					<h3>After</h3>
+
+					<pre>
+						<code class="language-plantuml">
+							@startuml
+
+							skinparam ParticipantPadding 10
+							skinparam BoxPadding 5
+
+							box "Domainesia"
+							actor User
+							participant Career as career
+							participant "DISC(Personality Test)" as disc
+							participant "HRIS(Admin Panel)" as hris
+							participant "Screening CV" as screening
+							participant "Psikotes Online" as psikotes
+							participant "Data Pribadi Pelamar(DPP Online) + EFMS" as dpp
+							participant "Interview Online" as interview
+							participant "PKWT" as pkwt
+							end box
+
+							box "CBNCloud"
+							participant "CBN Gateway" as cbn
+							end box
+							
+							box "HRMSLive(130)"
+							participant HRMS as hrms
+							end box
+
+							== Apply Website Career ==
+							User -> career: Apply
+							career -> hris: Data masuk ke HRIS
+							career -> disc: sinkron ke DISC
+							activate disc #A80036
+							disc -> career: generate akses token
+							note right : Perubahan yang terjadi pada blok MERAH
+							career -> User: kirim akses token by email
+							User -> disc: user melakukan tes DISC
+							disc -> disc: generate hasil
+							disc -> hris: NOK atau OK
+							deactivate disc
+
+							== HRIS ==
+							hris -> screening : Melakukan proses screen CV
+							screening -> psikotes: Blasting email dan melakukan psikotes
+							psikotes -> dpp: Input DPP
+							dpp -> interview: Interview HRD dan User
+							interview -> pkwt: Proses PKWT
+
+							== Sync Ke HRMS ==
+							hris -> cbn
+							cbn -> hrms
+							@enduml
+						</code>
+					</pre>
 				</section>
-				
+			</section>
+
+			<section>
+				<h2>Alur DISC Test</h2>
+
 				<section>
-					<h2>Perbandingan Alur</h2>
-					<section>
-						<h3>Before</h3>
-					</section>
-
-					<section>
-						<h3>After</h3>
-					</section>
+					<h3>Career</h3>
 				</section>
 
 				<section>
-					<h2>Alur DISC Test</h2>
-
-					<section>
-						<h3>Career</h3>
-					</section>
-
-					<section>
-						<h3>DISC - Pelamar</h3>
-					</section>
-
-					<section>
-						<h3>DISC - HRD</h3>
-					</section>
+					<h3>DISC - Pelamar</h3>
 				</section>
 
 				<section>
-					<h2>Evaluasi</h2>
+					<h3>DISC - HRD</h3>
+				</section>
+			</section>
 
-					<section>
-						<h3>Before</h3>
-					</section>
+			<section>
+				<h2>Evaluasi</h2>
 
-					<section>
-						<h3>After</h3>
-					</section>
+				<section>
+					<h3>Before</h3>
 				</section>
 
 				<section>
-					<h3>Fitur Pengembangan</h3>
+					<h3>After</h3>
 				</section>
+			</section>
 
-				<section>
-					<h3>Kamsia</h3>
-				</section>
-			</div>
+			<section>
+				<h3>Fitur Pengembangan</h3>
+			</section>
+
+			<section>
+				<h3>Kamsia</h3>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+
+			dependencies: [{
+				src: '//cdn.jsdelivr.net/npm/reveal-plantuml'
+			}, ]
+		});
+	</script>
+</body>
+
 </html>
