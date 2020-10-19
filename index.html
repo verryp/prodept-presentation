@@ -55,8 +55,8 @@
 			</section>
 
 			<section>
-				<h2>Perbandingan Alur</h2>
-				<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<h2>Perbandingan Alur</h2>
 					<h5>Before</h5>
 					
 					<pre>
@@ -75,77 +75,118 @@
 					</pre>
 				</section>
 
-				<section>
-					<h3>After</h3>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					
+					<div data-id="plantuml1" >
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur</h2>
+						<h5>After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								participant "Screening CV" as screening
+								participant "Psikotes Online" as psikotes
+								participant "Data Pribadi Pelamar(DPP Online) + EFMS" as dpp
+								participant "Interview Online" as interview
+								participant "PKWT" as pkwt
+								end box
+	
+								box "CBNCloud"
+								participant "CBN Gateway" as cbn
+								end box
+								
+								box "HRMSLive(130)"
+								participant HRMS as hrms
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+	
+								== HRIS ==
+								hris -> screening : Melakukan proses screen CV
+								screening -> psikotes: Blasting email dan melakukan psikotes
+								psikotes -> dpp: Input DPP
+								dpp -> interview: Interview HRD dan User
+								
+								interview -> pkwt: Proses PKWT
+								== Sync Ke HRMS ==
+								hris -> cbn
+								cbn -> hrms
+								@enduml
+							</code>
+						</pre>
+					</div>
+				</section>
 
-					<pre>
-						<code class="language-plantuml">
-							@startuml
-
-							skinparam ParticipantPadding 10
-							skinparam BoxPadding 5
-
-							box "Domainesia"
-							actor User
-							participant Career as career
-							participant "DISC(Personality Test)" as disc
-							participant "HRIS(Admin Panel)" as hris
-							participant "Screening CV" as screening
-							participant "Psikotes Online" as psikotes
-							participant "Data Pribadi Pelamar(DPP Online) + EFMS" as dpp
-							participant "Interview Online" as interview
-							participant "PKWT" as pkwt
-							end box
-
-							box "CBNCloud"
-							participant "CBN Gateway" as cbn
-							end box
-							
-							box "HRMSLive(130)"
-							participant HRMS as hrms
-							end box
-
-							== Apply Website Career ==
-							User -> career: Apply
-							career -> hris: Data masuk ke HRIS
-							career -> disc: sinkron ke DISC
-							activate disc #A80036
-							disc -> career: generate akses token
-							note right : Perubahan yang terjadi pada blok MERAH
-							career -> User: kirim akses token by email
-							User -> disc: user melakukan tes DISC
-							disc -> disc: generate hasil
-							disc -> hris: NOK atau OK
-							deactivate disc
-
-							== HRIS ==
-							hris -> screening : Melakukan proses screen CV
-							screening -> psikotes: Blasting email dan melakukan psikotes
-							psikotes -> dpp: Input DPP
-							dpp -> interview: Interview HRD dan User
-							interview -> pkwt: Proses PKWT
-
-							== Sync Ke HRMS ==
-							hris -> cbn
-							cbn -> hrms
-							@enduml
-						</code>
-					</pre>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="plantuml1">
+						<!-- <h2 style="font-size: 36px">Perbandingan Alur</h2> -->
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur</h2>
+						<h5 >After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+								@enduml
+							</code>
+						</pre>
+					</div>
 				</section>
 			</section>
 
 			<section>
 				<h2>Alur DISC Test</h2>
 
-				<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
 					<h3>Career</h3>
+					<iframe data-src="/assets/career.png" frameborder="0" data-preload></iframe>
 				</section>
 
-				<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
 					<h3>DISC - Pelamar</h3>
 				</section>
 
-				<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
 					<h3>DISC - HRD</h3>
 				</section>
 			</section>
