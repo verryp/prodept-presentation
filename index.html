@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Project On Department</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/sky.css" id="theme">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	<link rel="shortcut icon" href="/assets/favicon.png" />
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- ! Kata Pengantar -->
+			<section>
+				<a href="https://career.indomaretgroup.com">
+					<img src="/assets/idm-logo.png" alt="idm-logo"
+						style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+				</a>
+				<h3>Project On Department</h3>
+				<h4>DISC Test</h4>
+				<p>
+					<small>Created by <a href="https://verryp.xyz" target="_blank">Verryanto Paulus</a>, SD II
+						Indomaret Group</small>
+				</p>
+			</section>
+
+
+			<!-- ! Latar Belakang -->
+			<section>
+				<h2>Latar Belakang</h2>
+				<ol>
+					<li>Proses input hasil tes DISC masih menggunakan kertas (form fisik)</li>
+					<li>Tidak adanya integrasi dengan sistem HRIS</li>
+					<li>Pelamar yang sudah melakukan tes DISC tidak terdokumentasi</li>
+					<li>Cost yang diperlukan untuk biaya operasional(biaya kertas)</li>
+				</ol>
+			</section>
+
+			<section>
+				<h2>Tujuan</h2>
+				<ol>
+					<li>Kemudahan dalam mengakses data pelamar yang sudah melakukan tes secara online</li>
+					<li>Menurunkan cost biaya operasional untuk mencetak kertas</li>
+					<li>Digitalisasi Tes DISC</li>
+				</ol>
+			</section>
+
+			<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<h2>Perbandingan Alur</h2>
+					<h5>Before</h5>
+
+					<pre>
+						<code class="language-plantuml">
+							@startuml
+							start
+							:Career apply;
+							:Screening HRIS;
+							:Psikotes + Skill Test + LGD + DHR;
+							:Interview + DISC;
+							:PKWT;
+							:Input ke HRMS;
+							stop
+							@enduml
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+
+					<div data-id="plantuml1">
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur
+						</h2>
+						<h5>After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								participant "Screening CV" as screening
+								participant "Psikotes Online" as psikotes
+								participant "Data Pribadi Pelamar(DPP Online) + EFMS" as dpp
+								participant "Interview Online" as interview
+								participant "PKWT" as pkwt
+								end box
+	
+								box "CBNCloud"
+								participant "CBN Gateway" as cbn
+								end box
+								
+								box "HRMSLive(130)"
+								participant HRMS as hrms
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+	
+								== HRIS ==
+								hris -> screening : Melakukan proses screen CV
+								screening -> psikotes: Blasting email dan melakukan psikotes
+								psikotes -> dpp: Input DPP
+								dpp -> interview: Interview HRD dan User
+								
+								interview -> pkwt: Proses PKWT
+								== Sync Ke HRMS ==
+								hris -> cbn
+								cbn -> hrms
+								@enduml
+							</code>
+						</pre>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="plantuml1">
+						<!-- <h2 style="font-size: 36px">Perbandingan Alur</h2> -->
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur
+						</h2>
+						<h5>After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+								@enduml
+							</code>
+						</pre>
+					</div>
+				</section>
+			</section>
+
+			<section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<h2>Alur DISC Test</h2>
+						<pre>
+						<code class="language-plantuml">
+							@startuml
+							node "Website Career" as career
+							node "DISC - Pelamar" as applicant
+							node  "DISC - HRD" as hrd
+
+							career -> applicant
+							applicant -> hrd
+							@enduml
+						</code>
+					</pre>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>Website Career</h5>
+
+						<div class="r-stack">
+							<img class="r-stretch" src="/assets/img/career-1.png" alt="career-1" height="500">
+							<img class="fragment r-stretch" src="/assets/img/career-2.png" alt="career-2" height="550">
+							<img class="fragment" src="/assets/img/career-3.png" alt="career-3">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>DISC - Pelamar</h5>
+
+						<div class="r-stack">
+							<img class="fragment r-stretch fade-out" data-fragment-index="0"
+								src="/assets/img/disc-1.png" alt="disc-1" style="margin-top: 12px;" width="380"
+								height="580">
+
+							<div class="fragment r-stretch current-visible" data-fragment-index="0">
+								<img class="justify-end" src="/assets/img/disc-2.png" alt="disc-2" width="300"
+									height="550">
+								<img class="justify-center" src="/assets/img/disc-2a.png" alt="disc-2a" width="300">
+								<img class="justify-end" src="/assets/img/disc-2b.png" alt="disc-2b" width="300">
+							</div>
+
+							<img class="fragment" src="/assets/img/disc-3.png" alt="disc-3" width="300">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>DISC - HRD</h5>
+
+						<div class="r-stack">
+							<div class="r-stretch">
+								<img class="r-stretch justify-start" src="/assets/img/admin-1.png" alt="admin-1"
+									width="400">
+								<img class="r-stretch justify-end" src="/assets/img/admin-1a.png" alt="admin-1a"
+									width="400">
+							</div>
+
+							<img class="fragment fade-in-then-out" src="/assets/img/admin-2.png" alt="admin-2"
+								width="700">
+
+							<div class="fragment r-stack">
+								<img src="/assets/img/admin-3.png" alt="admin-3" width="750">
+								<img src="/assets/img/admin-3a.png" alt="admin-3a" class="fragment" width="700">
+							</div>
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<h2>Evaluasi</h2>
+
+				<section>
+					<h3>Before</h3>
+				</section>
+
+				<section>
+					<h3>After</h3>
+				</section>
+			</section>
+
+			<section>
+				<h3>Fitur Pengembangan</h3>
+			</section>
+
+			<section>
+				<h3>Kamsia</h3>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+
+			dependencies: [{
+				src: '//cdn.jsdelivr.net/npm/reveal-plantuml'
+			}, ]
+		});
+	</script>
+</body>
+
+</html>
