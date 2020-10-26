@@ -1,0 +1,513 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Project On Department</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	<link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- ! Kata Pengantar -->
+			<section data-auto-animate>
+				<a href="https://career.indomaretgroup.com" data-id="logo">
+					<img src="public/idm-logo.png" alt="idm-logo"
+						style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+				</a>
+				<h3>DISC Test</h3>
+				<h6 style="font-size: 26px">Project On Department</h6>
+				<p style="font-size: 20px">
+					<small>Created by <a href="https://verryp.xyz" target="_blank">Verryanto Paulus</a>, SD II
+						Indomaret Group</small>
+				</p>
+			</section>
+
+
+			<!-- ! Latar Belakang -->
+			<section data-auto-animate>
+				<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+					<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+						class="demo-logo">
+				</a>
+				<h4>Latar Belakang</h4>
+				<ol style="font-size: 28px">
+					<li class="fragment" data-fragment-index="1">Proses input hasil tes DISC masih menggunakan kertas (form fisik)</li>
+					<li class="fragment" data-fragment-index="2">Tidak adanya integrasi dengan sistem HRIS</li>
+					<li class="fragment" data-fragment-index="3">Pelamar yang sudah melakukan tes DISC tidak terdokumentasi</li>
+					<li class="fragment" data-fragment-index="4">Cost yang diperlukan untuk biaya operasional(biaya kertas)</li>
+				</ol>
+			</section>
+
+			<!-- ! Tujuan -->
+			<section data-auto-animate>
+				<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+					<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+						class="demo-logo">
+				</a>
+				<h4>Tujuan</h4>
+				<ol style="font-size: 28px">
+					<li class="fragment" data-fragment-index="1">Kemudahan dalam mengakses data pelamar yang sudah melakukan tes secara online</li>
+					<li class="fragment" data-fragment-index="2">Menurunkan biaya operasional untuk mencetak kertas</li>
+					<li class="fragment" data-fragment-index="3">Digitalisasi Tes DISC</li>
+				</ol>
+
+			</section>
+
+			<!-- ! Perbandingan Alur -->
+			<section>
+				<section data-auto-animate>
+					<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+						<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+							class="demo-logo">
+					</a>
+					<h2>Perbandingan Alur</h2>
+				</section>
+				<!-- ! BEFORE -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+						<img src="public/idm-logo.png" alt="idm-logo"
+							style="height: 50px; background: transparent; float: right; margin-top: -10px"
+							class="demo-logo justify-end">
+					</a>
+					<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur</h2>
+					<h5>Before</h5>
+
+					<pre>
+						<code class="language-plantuml">
+							@startuml
+							start
+							:Career apply;
+							:Screening HRIS;
+							:Psikotes + Skill Test + LGD + DHR;
+							:Interview + DISC;
+							:PKWT;
+							:Input ke HRMS;
+							stop
+							@enduml
+						</code>
+					</pre>
+				</section>
+
+				<!-- ! AFTER -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+
+					<div data-id="plantuml1">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur
+						</h2>
+						<h5>After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								participant "Screening CV" as screening
+								participant "Psikotes Online" as psikotes
+								participant "Data Pribadi Pelamar(DPP Online) + EFMS" as dpp
+								participant "Interview Online" as interview
+								participant "PKWT" as pkwt
+								end box
+	
+								box "CBNCloud"
+								participant "CBN Gateway" as cbn
+								end box
+								
+								box "HRMSLive(130)"
+								participant HRMS as hrms
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+	
+								== HRIS ==
+								hris -> screening : Melakukan proses screen CV
+								screening -> psikotes: Blasting email dan melakukan psikotes
+								psikotes -> dpp: Input DPP
+								dpp -> interview: Interview HRD dan User
+								
+								interview -> pkwt: Proses PKWT
+								== Sync Ke HRMS ==
+								hris -> cbn
+								cbn -> hrms
+								@enduml
+							</code>
+						</pre>
+					</div>
+				</section>
+
+				<!-- ! AFTER, zoom version -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="plantuml1">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Perbandingan Alur
+						</h2>
+						<h5>After</h5>
+						<pre>
+							<code class="language-plantuml">
+								@startuml
+	
+								skinparam ParticipantPadding 10
+								skinparam BoxPadding 5
+	
+								box "Domainesia"
+								actor User as user
+								participant Career as career
+								participant "DISC(Personality Test)" as disc
+								participant "HRIS(Admin Panel)" as hris
+								end box
+	
+								== Website Career ==
+								user -> career: Apply
+								career -> hris: Data masuk ke HRIS
+								career -> disc: sinkron ke DISC
+								activate disc #A80036
+								disc -> career: generate akses token
+								note right : Perubahan yang terjadi pada blok MERAH
+								career -> user: kirim akses token by email
+								user -> disc: user melakukan tes DISC
+								disc -> disc: generate hasil
+								disc -> hris: NOK atau OK
+								deactivate disc
+								@enduml
+							</code>
+						</pre>
+					</div>
+				</section>
+			</section>
+
+			<!-- ! Alur DISC -->
+			<section>
+				<!-- ! Introduction -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+								class="demo-logo">
+						</a>
+						<h2>Alur DISC Test</h2>
+						<pre>
+						<code class="language-plantuml">
+							@startuml
+							node "Website Career" as career
+							node "DISC - Pelamar" as applicant
+							node  "DISC - HRD" as hrd
+
+							career -> applicant
+							applicant -> hrd
+							@enduml
+						</code>
+					</pre>
+					</div>
+				</section>
+
+				<!-- ! Career -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>Website Career</h5>
+
+						<div class="r-stack">
+							<img class="r-stretch" src="public/img/career-1.png" alt="career-1" height="500">
+							<img class="fragment r-stretch" src="public/img/career-2.png" alt="career-2" height="550">
+							<img class="fragment" src="public/img/career-3.png" alt="career-3">
+						</div>
+					</div>
+				</section>
+
+				<!-- ! DISC - Applicant -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>DISC - Pelamar</h5>
+
+						<div class="r-stack">
+							<img class="fragment r-stretch fade-out" data-fragment-index="0" src="public/img/disc-1.png"
+								alt="disc-1" style="margin-top: 12px;" width="380" height="580">
+
+							<div class="fragment r-stretch current-visible" data-fragment-index="0">
+								<img class="justify-end" src="public/img/disc-2.png" alt="disc-2" width="300"
+									height="550">
+								<img class="justify-center" src="public/img/disc-2a.png" alt="disc-2a" width="300">
+								<img class="justify-end" src="public/img/disc-2b.png" alt="disc-2b" width="300">
+							</div>
+
+							<img class="fragment" src="public/img/disc-3.png" alt="disc-3" width="300">
+						</div>
+					</div>
+				</section>
+
+				<!-- ! DISC - HRD -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="alur-disc">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Alur DISC Test
+						</h2>
+						<h5>DISC - HRD</h5>
+
+						<div class="r-stack">
+							<div class="r-stretch fade-in-then-semi-out">
+								<img class="r-stretch justify-start" src="public/img/admin-1.png" alt="admin-1"
+									width="400">
+								<img class="r-stretch justify-end" src="public/img/admin-1a.png" alt="admin-1a"
+									width="400">
+							</div>
+
+							<img class="fragment fade-in-then-out" src="public/img/admin-2.png" alt="admin-2"
+								width="700">
+
+							<div class="fragment r-stack fade-in-then-out">
+								<img src="public/img/admin-3.png" alt="admin-3" width="750">
+								<img src="public/img/admin-3a.png" alt="admin-3a" class="fragment" width="700">
+							</div>
+
+							<div class="fragment r-stack">
+								<img src="public/img/admin-4.png" alt="admin-4">
+								<img src="public/img/admin-4a.png" alt="admin-4a" class="fragment" width="800">
+								<img src="public/img/admin-4b.png" alt="admin-4b" class="fragment" width="800">
+								<img src="public/img/admin-4c.png" alt="admin-4c" class="fragment" width="800">
+								<img src="public/img/admin-4d.png" alt="admin-4d" class="fragment" width="800">
+								<img src="public/img/admin-4e.png" alt="admin-4e" class="fragment" width="800">
+								<img src="public/img/admin-5.png" alt="admin-5" class="fragment" width="550">
+							</div>
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<!-- ! Evaluasi -->
+			<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="evaluation">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+								class="demo-logo">
+						</a>
+						<h2>Evaluasi</h2>
+					</div>
+				</section>
+
+				<!-- ! Input - Output -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="evaluation">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Evaluasi</h2>
+						<div class="r-stack">
+							<div class="fragment fade-out" data-fragment-index="0">
+								<h5>Input - Output (Before)</h5>
+								<img class="r-stretch justify-start" src="public/img/evaluation/old-disc1.png"
+									alt="old-disc1" width="400">
+								<img class="r-stretch justify-end" src="public/img/evaluation/old-disc1a.png"
+									alt="old-disc1a" width="400" style="z-index: 1;" height="300">
+							</div>
+
+							<div class="fragment current-visible" data-fragment-index="0">
+								<h5>Input - Output (After)</h5>
+								<img class="r-stretch justify-start" src="public/img/evaluation/new-disc1a.png"
+									alt="new-disc1a" width="400" style="z-index: 1;" height="300">
+								<img class="r-stretch justify-center" src="public/img/disc-2.png" alt="new-disc1a"
+									width="200"
+									style="z-index: 2; position: absolute; margin-left: -150px; margin-top:5px">
+								<img class="r-stretch justify-end" src="public/img/evaluation/new-disc1.png"
+									alt="new-disc1" width="400" style="z-index: 1;" height="300">
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- ! Akses Data -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="evaluation">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Evaluasi</h2>
+						<div class="r-stack">
+							<div class="fragment fade-out" data-fragment-index="0">
+								<h5>Akses Data (Before)</h5>
+								<img class="r-stretch justify-start" src="public/img/evaluation/old-access1.png"
+									alt="old-access1" width="400">
+								<img class="r-stretch justify-end" src="public/img/evaluation/old-access1a.jpg"
+									alt="old-access1a" width="450">
+							</div>
+
+							<div class="fragment current-visible" data-fragment-index="0">
+								<h5>Akses Data (After)</h5>
+								<pre>
+									<code class="language-plantuml">
+										@startuml
+										left to right direction
+
+										actor User as user
+										cloud Internet as internet
+										folder Server {
+											node "Aplikasi DISC" as disc
+										}
+
+										user <--> internet
+										internet <--> disc
+										@enduml
+									</code>
+								</pre>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- ! Biaya -->
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="evaluation">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo"
+								style="height: 50px; background: transparent; float: right; margin-top: -10px"
+								class="demo-logo justify-end">
+						</a>
+						<h2 class="r-stack justify-start" style="font-size: 24px; margin-left: 22px;">Evaluasi</h2>
+						<h5>Biaya</h5>
+						<pre data-id="cost-animation">
+							<code class="hljs" data-trim data-line-numbers="1|3-6|8-9|11-12|14|15-16|17-18|20-22">
+								<script type="text/template">
+									BIAYA PRINT SELAMA SETAHUN (BEFORE)
+
+									Diketahui
+									  - 1 kali tes => 5 lembar
+									  - per lember => ± Rp. 3000
+									  - ± 5000 pelamr/tahun
+
+									Maka
+									  => 5 * 3000 * 5000
+
+									Hasil
+									  => ± Rp. 75.000.000 / tahun
+
+									BIAYA SEWA WEB HOSTING SETAHUN (AFTER)
+									  - Domain indomaretgroup.com => Rp. 141.900
+									  - Server + Storage(48GB) => ± Rp. 7.000.000
+									    => ± Rp. 7.141.900
+									    => Menampung jutaan pelamar
+
+									COST REDUCTION
+									=> ± Rp. 67.858.100 (90.5%)
+
+								</script>
+							</code>
+						</pre>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="next-feat">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;"
+								class="demo-logo">
+						</a>
+						<h2>Fitur Pengembangan</h2>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div data-id="next-feat">
+						<a href="https://career.indomaretgroup.com" data-id="logo" class="justify-end">
+							<img src="public/idm-logo.png" alt="idm-logo" style="height: 80px; background: transparent;" class="demo-logo">
+						</a>
+						<h2>Fitur Pengembangan</h2>
+						<ol style="font-size: 28px">
+							<li class="fragment" data-fragment-index="1">Preview jawaban pelamar</li>
+							<li class="fragment" data-fragment-index="2">Scheduler notif tes akan expire</li>
+							<li class="fragment" data-fragment-index="3">Admin panel gabung ke HRIS</li>
+						</ol>
+					</div>
+				</section>
+			</section>
+
+			<section data-background="https://i.gifer.com/UV02.gif">
+				<h3>Terima Kasih</h3>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+
+			plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+
+			dependencies: [{
+				src: '//cdn.jsdelivr.net/npm/reveal-plantuml'
+			}, ]
+		});
+	</script>
+</body>
+
+</html>
